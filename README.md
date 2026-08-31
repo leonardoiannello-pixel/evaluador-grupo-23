@@ -3,6 +3,6 @@
 ## Integrantes
 
 - Leonardo Iannello
-- Martín Graffia
+- Martín Grafia
 - Facundo Villagran
 - Diego Rog
