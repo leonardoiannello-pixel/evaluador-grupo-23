@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0",
+  "paper": {
+    "id": "Customer Satisfaction at the Push of a Button _ The New Yorker",
+    "file_name": "Customer Satisfaction at the Push of a Button _ The New Yorker.pdf",
+    "title": "Customer Satisfaction at the Push of a Button",
+    "authors": [
+      "David Owen"
+    ],
+    "year": 2018
+  },
+  "user_prediction": {
+    "text": "**La simplicidad puede ganarle a la precisión.** HappyOrNot prácticamente hace una sola pregunta con cuatro botones. Es una medición muy rudimentaria, pero justamente por eso consigue muchísimo volumen\n\n**El verdadero producto no es la carita: es el dato + momento + lugar.** Cada respuesta es anónima pero tiene timestamp. Eso permite detectar cosas del tipo: “todos los días a las 10:00 cae la satisfacción”. \n\n**Medir en tiempo real permite actuar, no solamente hacer reportes.** En el estadio de los 49ers pasaron de saber el martes qué había ocurrido el domingo a conocerlo **el mismo domingo, cada 15 minutos y por punto de venta**. Después llegaron incluso al monitoreo segundo a segundo. ",
+    "comparison": {
+      "matches": [
+        "El artículo respalda que la extrema simplicidad del dispositivo reduce la fricción y permite reunir miles de respuestas, compensando en volumen parte de la escasa profundidad de cada respuesta.",
+        "El artículo confirma que las respuestas son anónimas y llevan marca temporal; combinadas con la ubicación de cada terminal, permitieron detectar una caída diaria de satisfacción a las 10:00 en una tienda.",
+        "El caso de los 49ers coincide con la predicción: el análisis pasó de estar disponible el martes posterior al partido a estarlo el domingo en intervalos de quince minutos y por puesto de venta, y luego segundo a segundo mediante una aplicación.",
+        "El texto muestra que la medición rápida puede activar intervenciones operativas, como enviar a un empleado a investigar un aumento de respuestas negativas en una ubicación concreta."
+      ],
+      "differences": [
+        "El artículo no demuestra que la simplicidad sea más precisa que métodos más ricos; sostiene que la facilidad de uso produce mucho volumen y presenta ese volumen como una forma de obtener una señal útil pese al ruido.",
+        "Además del momento y el lugar, el valor descrito depende de vincular la señal con investigación y acción humana: cámaras, reasignación o capacitación de personal, cambios de dotación y mensajería operativa."
+      ],
+      "unresolved": [
+        "El artículo no ofrece una validación estadística que permita saber cuánto volumen basta para compensar sesgos de selección, respuestas falsas o la falta de contexto cualitativo.",
+        "Los casos narrados no permiten aislar con seguridad el efecto causal de HappyOrNot frente a otros cambios organizacionales simultáneos."
+      ]
+    }
+  },
+  "analysis": {
+    "central_question": "¿Cómo puede un sistema de retroalimentación extremadamente simple, anónimo y de alto volumen convertir impresiones de clientes en información operativa útil, y cuáles son los límites de medir la satisfacción de ese modo?",
+    "method": "Artículo periodístico basado en entrevistas con fundadores, empleados y clientes de HappyOrNot, observación directa del sistema en el estadio de los San Francisco 49ers y relatos de casos de uso en comercios, aeropuertos y otras organizaciones. No presenta un estudio experimental formal ni un análisis estadístico independiente.",
+    "key_ideas": [
+      {
+        "id": 1,
+        "idea": "La baja fricción intercambia profundidad por participación: una pregunta y cuatro botones producen respuestas rudimentarias, pero en un volumen que las encuestas más exigentes rara vez alcanzan.",
+        "evidence": "Un solo terminal puede registrar miles de impresiones diarias sin interrumpir el paso del cliente. En el primer partido de los 49ers con HappyOrNot se reunieron veinte mil respuestas, aproximadamente tantas como todas las encuestas devueltas durante el año anterior.",
+        "source_location": "Páginas 2-3 y 7"
+      },
+      {
+        "id": 2,
+        "idea": "La marca temporal y la ubicación convierten una valoración anónima en una señal diagnóstica capaz de revelar patrones que los totales agregados ocultan.",
+        "evidence": "Una tienda observó que la satisfacción caía todos los días a las 10:00; la revisión de video vinculó el patrón con el inicio del turno de una empleada. En el estadio, cada terminal se representaba en un mapa y los cambios podían recorrerse por hora y por zona.",
+        "source_location": "Páginas 3 y 8"
+      },
+      {
+        "id": 3,
+        "idea": "La retroalimentación en tiempo real puede integrarse a la operación para investigar y corregir problemas mientras la experiencia todavía está ocurriendo.",
+        "evidence": "Los 49ers pasaron de conocer el martes el desempeño del domingo a verlo el mismo domingo cada quince minutos y por puesto de venta; más tarde pudieron monitorearlo segundo a segundo. Una aplicación permitía enviar personal ante picos negativos y comunicar faltantes o problemas de limpieza con mensajes y fotos.",
+        "source_location": "Páginas 7-8"
+      },
+      {
+        "id": 4,
+        "idea": "Una medida de satisfacción separada de los indicadores comerciales puede cuestionar diagnósticos previos y orientar cambios de recursos.",
+        "evidence": "Un minorista de sofás suponía que sus empleados diurnos explicaban las bajas ventas, pero los clientes estaban más satisfechos en esas horas. La menor satisfacción aparecía cuando las ventas eran altas; al reforzar la dotación por la tarde y noche, mejoraron las ganancias.",
+        "source_location": "Página 3"
+      },
+      {
+        "id": 5,
+        "idea": "El gran volumen no elimina los problemas de medición: las respuestas pueden reflejar factores ajenos al servicio, incluir pulsaciones falsas o inducir conductas dirigidas a mejorar la métrica en vez de la experiencia.",
+        "evidence": "El artículo menciona factores exógenos que afectan valoraciones, observa una pulsación negativa de alguien que no compró y cita un caso ajeno a HappyOrNot en el que una institución mejoró su calificación rechazando a los pacientes más enfermos. Los responsables confían en retrasos entre pulsaciones y en la relación señal-ruido, pero no presentan una validación independiente.",
+        "source_location": "Páginas 2, 7 y 9"
+      }
+    ],
+    "main_conclusion": "El artículo sostiene que HappyOrNot vuelve accionable la satisfacción al hacer la respuesta casi instantánea y asociarla con tiempo y lugar: la escala y velocidad permiten localizar problemas, revisar supuestos e intervenir durante la operación. A la vez, advierte que una métrica simple no equivale a una medición completa u objetiva de la felicidad y puede contener ruido, sesgos o incentivos perversos.",
+    "limitations": [
+      "Es un reportaje periodístico y no una evaluación científica controlada; gran parte de la evidencia proviene de la empresa y de clientes seleccionados.",
+      "Las respuestas anónimas no permiten verificar quién respondió, por qué lo hizo ni si representa al conjunto de clientes.",
+      "Una valoración de cuatro opciones aporta muy poco contexto cualitativo y puede verse afectada por factores ajenos al servicio evaluado.",
+      "El volumen puede amortiguar respuestas espurias, pero el artículo no cuantifica el sesgo, la tasa de participación ni la precisión de la señal.",
+      "Medir un indicador puede generar manipulación o conductas orientadas a optimizar la puntuación en lugar del resultado sustantivo.",
+      "Los resultados narrados son casos observacionales; no permiten atribuir causalmente todas las mejoras al sistema de medición."
+    ],
+    "agent_uncertainties": [
+      "El documento es un artículo de revista y no un paper académico; por eso el campo method describe el enfoque periodístico y no un diseño de investigación formal.",
+      "La afirmación de que la satisfacción general de seguridad en Heathrow aumentó más de la mitad se atribuye en el texto a un ejecutivo de HappyOrNot y no se acompaña de datos independientes ni detalles del cálculo.",
+      "El artículo no informa tasas de respuesta, intervalos de confianza ni criterios estadísticos para distinguir señal de ruido."
+    ]
+  },
+  "quiz": [
+    {
+      "id": 1,
+      "question": "¿Cuál es el principal intercambio que hace posible el alto volumen de respuestas de HappyOrNot?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Reduce la profundidad de cada respuesta para minimizar el esfuerzo de participar."
+        },
+        {
+          "id": "B",
+          "text": "Solicita datos personales para poder corregir el sesgo de selección."
+        },
+        {
+          "id": "C",
+          "text": "Reemplaza las opiniones espontáneas por entrevistas con muestras pequeñas."
+        },
+        {
+          "id": "D",
+          "text": "Ofrece premios para asegurar que cada cliente responda varias preguntas."
+        }
+      ],
+      "correct_option_id": "A",
+      "explanation": "La opción A es correcta porque una única pregunta con cuatro botones puede responderse sin detenerse. Esa baja fricción sacrifica detalle individual, pero genera una cantidad de observaciones que puede revelar patrones operativos.",
+      "related_idea_id": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": 2,
+      "question": "¿Qué característica permitió investigar la caída diaria de satisfacción a las 10:00 en una tienda?",
+      "options": [
+        {
+          "id": "A",
+          "text": "La identificación nominal de cada cliente insatisfecho."
+        },
+        {
+          "id": "B",
+          "text": "La combinación de marca temporal y ubicación del terminal."
+        },
+        {
+          "id": "C",
+          "text": "La inclusión de comentarios escritos junto a cada voto."
+        },
+        {
+          "id": "D",
+          "text": "La comparación anual con reseñas publicadas en línea."
+        }
+      ],
+      "correct_option_id": "B",
+      "explanation": "La opción B es correcta: aunque el voto era anónimo, su momento y ubicación permitieron detectar un patrón repetido y contrastarlo con video. Conceptualmente, esos metadatos convierten una reacción mínima en una pista diagnóstica.",
+      "related_idea_id": 2,
+      "difficulty": "medium"
+    },
+    {
+      "id": 3,
+      "question": "¿Qué cambio distingue el uso operativo de HappyOrNot por los 49ers de una encuesta postpartido tradicional?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Permitió conocer la identidad de cada aficionado durante el partido."
+        },
+        {
+          "id": "B",
+          "text": "Eliminó la necesidad de que empleados investigaran los problemas detectados."
+        },
+        {
+          "id": "C",
+          "text": "Permitió observar variaciones por momento y puesto, y responder durante el evento."
+        },
+        {
+          "id": "D",
+          "text": "Convirtió automáticamente cada respuesta negativa en una solución específica."
+        }
+      ],
+      "correct_option_id": "C",
+      "explanation": "La opción C es correcta porque la información pasó a estar disponible el mismo domingo, primero cada quince minutos y después segundo a segundo, desagregada por ubicación. Esto importa porque acorta el ciclo entre señal, investigación y acción.",
+      "related_idea_id": 3,
+      "difficulty": "medium"
+    },
+    {
+      "id": 4,
+      "question": "¿Qué aprendizaje produjo el caso del minorista sueco de sofás?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Las bajas ventas diurnas demostraban que el personal de la mañana atendía peor."
+        },
+        {
+          "id": "B",
+          "text": "Las ventas y la satisfacción siempre se movían en la misma dirección."
+        },
+        {
+          "id": "C",
+          "text": "Los clientes estaban menos satisfechos cuando había menos actividad comercial."
+        },
+        {
+          "id": "D",
+          "text": "Las horas de mayores ventas podían rendir aún más si se reforzaba la atención."
+        }
+      ],
+      "correct_option_id": "D",
+      "explanation": "La opción D es correcta: la satisfacción era más baja durante las horas de ventas altas, lo que llevó a reforzar la dotación en esos períodos y mejoró las ganancias. El caso muestra cómo una métrica distinta puede cuestionar una interpretación basada sólo en ingresos.",
+      "related_idea_id": 4,
+      "difficulty": "hard"
+    },
+    {
+      "id": 5,
+      "question": "¿Cuál es la inferencia más prudente sobre la afirmación de que el alto volumen asegura una buena relación señal-ruido?",
+      "options": [
+        {
+          "id": "A",
+          "text": "El volumen vuelve imposible que factores externos alteren las valoraciones."
+        },
+        {
+          "id": "B",
+          "text": "El volumen puede amortiguar votos espurios, pero no demuestra ausencia de sesgos."
+        },
+        {
+          "id": "C",
+          "text": "El volumen permite interpretar causalmente cualquier cambio de satisfacción."
+        },
+        {
+          "id": "D",
+          "text": "El volumen garantiza que quienes responden representan a todos los clientes."
+        }
+      ],
+      "correct_option_id": "B",
+      "explanation": "La opción B es correcta. Muchas observaciones pueden reducir el peso relativo de una pulsación falsa, pero no corrigen automáticamente selección, factores exógenos o manipulación de la métrica. Esta distinción evita confundir cantidad de datos con validez.",
+      "related_idea_id": 5,
+      "difficulty": "hard"
+    }
+  ]
+}
