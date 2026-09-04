@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "paper": {
+    "id": "dt930_0",
+    "file_name": "dt930_0.pdf",
+    "title": "Un Modelo Simple de Equilibrio General y Análisis de Series Históricas de Argentina 1970-2025",
+    "authors": [
+      "Carlos Alfredo Rodríguez"
+    ],
+    "year": 2026
+  },
+  "user_prediction": {
+    "text": "1. **Nominal no significa real.** En Argentina, dinero, precios, salarios y tipo de cambio nominal crecieron cantidades astronómicas en 55 años, mientras las variables reales tuvieron variaciones muchísimo menores.\n2. **El salario nominal puede multiplicarse sin aumentar el poder adquisitivo.** Según la serie construida por el autor, el salario real normalizado vale 1 tanto en 1970 como en 2000 y 2025, reflejando una extraordinaria debilidad del crecimiento del ingreso laboral real.\n3. **No se pueden fijar arbitrariamente varias variables nominales.** Cuando el gobierno intenta controlar simultáneamente precios, salarios, dinero o tipo de cambio en niveles incompatibles con el equilibrio real, aparecen escasez, racionamiento y mercados paralelos. ",
+    "comparison": {
+      "matches": [
+        "La predicción distingue correctamente las enormes variaciones acumuladas de las variables nominales del rango mucho más acotado de las variables reales; este es el resultado central que el paper destaca en las Tablas 1 y 2 y en sus conclusiones.",
+        "La predicción reproduce fielmente el resultado de la serie salarial: el salario real normalizado es 1,00 en 1970, 2000 y 2025, lo que el autor interpreta como extraordinaria debilidad del crecimiento del ingreso laboral real, no como ausencia literal de crecimiento de toda la economía.",
+        "La predicción coincide con el argumento teórico según el cual fijar simultáneamente dos o más variables nominales en valores incompatibles con el equilibrio real genera excesos de oferta o demanda, racionamiento y mercados paralelos."
+      ],
+      "differences": [
+        "La predicción usa el término «escasez», mientras que el paper formula el resultado con mayor precisión como «excesos de oferta o demanda», además de racionamiento y mercados paralelos.",
+        "El paper añade una explicación formal ausente de la predicción: tres condiciones de equilibrio homogéneas de grado cero determinan tres variables reales, pero dejan indeterminadas las cuatro variables nominales hasta elegir un numerario."
+      ],
+      "unresolved": [
+        "Las series históricas ilustran la separación entre magnitudes nominales y reales, pero el documento no presenta una prueba econométrica que identifique causalmente el efecto de controles nominales específicos sobre escasez, racionamiento o mercados paralelos.",
+        "La falta de las bases originales de las series de 1970-2000 impide verificar de manera independiente la exactitud de todos los valores históricos usados en la comparación."
+      ]
+    }
+  },
+  "analysis": {
+    "central_question": "¿Cómo muestra un modelo walrasiano simple de economía abierta la necesidad de elegir un numerario y la diferencia entre variables nominales y reales, y cómo ilustra esa diferencia la experiencia argentina de 1970-2025?",
+    "method": "El autor presenta un modelo simple de equilibrio general walrasiano para una economía abierta, con tres condiciones de equilibrio —mercado de dinero, balance de pagos y mercado de trabajo— y cuatro variables nominales —M, E, P y W—. Por homogeneidad de grado cero, el sistema determina M/P, E·P*/P y W/P, pero requiere fijar exógenamente un numerario. Luego construye y enlaza artesanalmente series representativas normalizadas a 1970=1: para 1970-2000 utiliza series docentes cuyas bases originales ya no están disponibles; desde 2000 las enlaza con series disponibles de RIPTE, M1 y dólar paralelo, junto con precios mayoristas argentinos y precios al consumidor de Estados Unidos. Compara niveles nominales y cocientes reales mediante dos tablas y gráficos descriptivos, sin análisis econométrico.",
+    "key_ideas": [
+      {
+        "id": 1,
+        "idea": "El equilibrio real no fija por sí solo los niveles nominales: hace falta elegir un numerario.",
+        "evidence": "El modelo tiene cuatro variables nominales (M, E, P y W) y tres condiciones de equilibrio homogéneas de grado cero. Estas determinan únicamente tres relaciones reales —M/P, E·P*/P y W/P—, de modo que una variable nominal debe determinarse exógenamente.",
+        "source_location": "Páginas internas 2-3 (páginas 4-5 del PDF), sección «Modelo Simple de Equilibrio General»; recapitulación en «Conclusiones», páginas internas 10-11."
+      },
+      {
+        "id": 2,
+        "idea": "Las magnitudes nominales argentinas crecieron en muchos órdenes de magnitud, mientras las variables reales se mantuvieron en un rango incomparablemente menor.",
+        "evidence": "Con todas las series normalizadas a 1970=1, la Tabla 1 muestra que en 2025 las variables nominales alcanzan aproximadamente entre 159 billones y 1.116 billones de veces su nivel inicial. La Tabla 2 muestra, en cambio, que las variables reales observadas durante el período van desde un mínimo de 0,16 hasta un máximo de 10,11.",
+        "source_location": "Páginas internas 5-9 (páginas 7-11 del PDF), Tablas 1 y 2 y Gráficos 1 y 2; «Conclusiones», página interna 10."
+      },
+      {
+        "id": 3,
+        "idea": "El aumento del salario nominal no implica por sí mismo una mejora del salario real.",
+        "evidence": "Aunque el salario nominal normalizado pasa de 1 en 1970 a 159.273.814.229.247 en 2025, el salario real W/IPM registra 1,00 en 1970, 2000 y 2025. El autor interpreta este resultado como una extraordinaria debilidad del crecimiento del ingreso laboral real, no como ausencia literal de crecimiento de la economía.",
+        "source_location": "Páginas internas 6-8 (páginas 8-10 del PDF), comentario sobre salario real y Tablas 1 y 2; «Conclusiones», páginas internas 10-11."
+      },
+      {
+        "id": 4,
+        "idea": "Fijar simultáneamente variables nominales no garantiza los valores reales buscados y puede producir desequilibrios observables.",
+        "evidence": "El paper sostiene que, cuando los gobiernos fijan dos o más variables nominales en niveles incompatibles con las condiciones de equilibrio real, aparecen excesos de oferta o demanda, racionamiento y mercados paralelos. También advierte contra equiparar aumentos nominales de dinero o salarios y devaluaciones con aumentos de sus contrapartes reales.",
+        "source_location": "Páginas internas 3-4 (páginas 5-6 del PDF), discusión posterior al modelo."
+      },
+      {
+        "id": 5,
+        "idea": "Los resultados históricos son ilustrativos y aproximados, no una base estadística apta para inferencia econométrica.",
+        "evidence": "Las series de 1970-2000 fueron construidas con fines docentes y sus bases originales ya no están disponibles; la identificación de fuentes antiguas es tentativa. La extensión posterior se enlazó artesanalmente con series disponibles, y el autor indica expresamente que los datos no deben tomarse como base para usos econométricos.",
+        "source_location": "Páginas internas 4-7 (páginas 6-9 del PDF), descripción de construcción de series y nota de la Tabla 1."
+      }
+    ],
+    "main_conclusion": "La experiencia argentina de 1970-2025 ofrece un caso extremo de una propiedad básica del modelo: las variables nominales pueden cambiar en muchos órdenes de magnitud, pero las variables reales relevantes dependen de relaciones entre magnitudes y no de sus niveles absolutos. El crecimiento nominal acumulado refleja la historia inflacionaria y la inestabilidad monetaria e institucional, mientras que la serie construida muestra una marcada debilidad del salario medio real a lo largo de los 55 años.",
+    "limitations": [
+      "Las series fueron construidas y enlazadas artesanalmente y deben interpretarse como aproximaciones históricas, no como una base para usos econométricos.",
+      "Las bases originales de las series 1970-2000 ya no están disponibles y la identificación de algunas fuentes antiguas —ACDE e IMF International Financial Statistics— es tentativa.",
+      "La ausencia de series oficiales completas y los controles sobre salarios, precios y mercado cambiario dificultan la medición; por ello se emplean proxies como el dólar paralelo, el IPM, M1 y una serie salarial basada en ACDE/RIPTE.",
+      "Las variables están normalizadas a 1970=1 y se muestran años seleccionados, no una secuencia anual completa en todo el período; esto limita la lectura de trayectorias intermedias.",
+      "El análisis es descriptivo y teórico: no estima relaciones causales ni cuantifica estadísticamente la incertidumbre de las series."
+    ],
+    "agent_uncertainties": [
+      "El documento no detalla procedimientos reproducibles de empalme, fórmulas completas de construcción ni las bases originales para 1970-2000, por lo que no es posible auditar independientemente todos los valores.",
+      "La frase de las conclusiones que ubica las variables nominales entre aproximadamente 150 y 1.100 billones de veces se interpretó conforme a los niveles normalizados de la Tabla 1; el propio autor advierte que es fácil equivocarse al expresar porcentajes con tantos ceros.",
+      "La atribución de cambios reales a capital, tecnología, inflación, restricciones financieras u otros factores se presenta como interpretación económica del autor y no como resultado causal probado en el documento."
+    ]
+  },
+  "quiz": [
+    {
+      "id": 1,
+      "question": "¿Por qué el modelo requiere elegir un numerario?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Porque las cuatro variables nominales deben igualarse entre sí para que exista equilibrio."
+        },
+        {
+          "id": "B",
+          "text": "Porque tres ecuaciones homogéneas determinan relaciones reales, pero no los cuatro niveles nominales."
+        },
+        {
+          "id": "C",
+          "text": "Porque el nivel internacional de precios debe estimarse dentro del mercado de trabajo."
+        },
+        {
+          "id": "D",
+          "text": "Porque cada mercado necesita una moneda distinta para expresar sus cantidades."
+        }
+      ],
+      "correct_option_id": "B",
+      "explanation": "La opción B es correcta: las tres condiciones son homogéneas de grado cero y determinan M/P, E·P*/P y W/P, pero dejan un grado de indeterminación entre M, E, P y W. Elegir un numerario fija la escala nominal sin alterar el equilibrio real; esta distinción es la base formal del paper.",
+      "related_idea_id": 1,
+      "difficulty": "medium"
+    },
+    {
+      "id": 2,
+      "question": "¿Qué comparación resume mejor el resultado histórico central del paper?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Las variables nominales y reales aumentaron casi en la misma proporción durante todo el período."
+        },
+        {
+          "id": "B",
+          "text": "Las variables reales crecieron en billones de veces y las nominales permanecieron cerca de uno."
+        },
+        {
+          "id": "C",
+          "text": "Las variables nominales crecieron en muchos órdenes de magnitud y las reales variaron en un rango mucho menor."
+        },
+        {
+          "id": "D",
+          "text": "Solo el tipo de cambio nominal aumentó sustancialmente; dinero, precios y salarios quedaron estables."
+        }
+      ],
+      "correct_option_id": "C",
+      "explanation": "La opción C es correcta: los niveles nominales normalizados alcanzan cientos de billones de veces el valor de 1970, mientras los cocientes reales observados van aproximadamente de 0,16 a 10,11. La diferencia muestra por qué un nivel nominal aislado no informa directamente sobre una magnitud real.",
+      "related_idea_id": 2,
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "question": "¿Cuál es la interpretación más fiel del salario real igual a 1,00 en 1970, 2000 y 2025?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Demuestra que ninguna dimensión de la economía argentina creció durante esos 55 años."
+        },
+        {
+          "id": "B",
+          "text": "Indica que el salario nominal permaneció sin cambios entre los tres años."
+        },
+        {
+          "id": "C",
+          "text": "Prueba que todos los trabajadores tuvieron exactamente el mismo poder adquisitivo."
+        },
+        {
+          "id": "D",
+          "text": "Refleja, según la serie usada, una extraordinaria debilidad del crecimiento del ingreso laboral real."
+        }
+      ],
+      "correct_option_id": "D",
+      "explanation": "La opción D es correcta y conserva el matiz del autor: la igualdad del índice en esos años caracteriza la debilidad del salario medio real según una serie aproximada, pero no demuestra ausencia literal de crecimiento de toda la economía ni igualdad entre trabajadores.",
+      "related_idea_id": 3,
+      "difficulty": "medium"
+    },
+    {
+      "id": 4,
+      "question": "Según el marco del paper, ¿qué puede ocurrir si se fijan simultáneamente variables nominales en niveles incompatibles con el equilibrio real?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Excesos de oferta o demanda, racionamiento y mercados paralelos."
+        },
+        {
+          "id": "B",
+          "text": "Convergencia automática de todas las variables reales hacia sus valores iniciales."
+        },
+        {
+          "id": "C",
+          "text": "Eliminación permanente de la inflación sin efectos sobre otros mercados."
+        },
+        {
+          "id": "D",
+          "text": "Determinación simultánea de cuatro variables nominales mediante solo tres ecuaciones."
+        }
+      ],
+      "correct_option_id": "A",
+      "explanation": "La opción A es correcta: controles nominales mutuamente incompatibles con las relaciones de equilibrio generan desequilibrios que se manifiestan como excesos, racionamiento o mercados paralelos. Conceptualmente, fijar precios nominales no permite fijar de manera independiente todos los precios relativos.",
+      "related_idea_id": 4,
+      "difficulty": "medium"
+    },
+    {
+      "id": 5,
+      "question": "¿Para cuál de los siguientes usos son más apropiadas las series presentadas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Estimar con precisión econométrica el efecto causal de cada control de precios."
+        },
+        {
+          "id": "B",
+          "text": "Auditar los valores originales de 1970-2000 mediante bases plenamente reproducibles."
+        },
+        {
+          "id": "C",
+          "text": "Ilustrar históricamente la diferencia de escala entre variables nominales y reales."
+        },
+        {
+          "id": "D",
+          "text": "Medir sin error la distribución del ingreso laboral entre todos los trabajadores."
+        }
+      ],
+      "correct_option_id": "C",
+      "explanation": "La opción C es correcta: el propio autor presenta las series como aproximaciones históricas con finalidad ilustrativa. La construcción artesanal, los empalmes y la pérdida de bases originales impiden tratarlas como una base econométrica reproducible, una limitación esencial para interpretar sus resultados.",
+      "related_idea_id": 5,
+      "difficulty": "hard"
+    }
+  ]
+}

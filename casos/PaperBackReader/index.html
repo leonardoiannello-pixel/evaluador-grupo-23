@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="PaperBackReader transforma papers en ideas recuperables y práctica activa." />
+    <title>PaperBackReader — leer menos, recordar más</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="topbar" aria-label="Navegación principal">
+        <a class="brand" href="#top" aria-label="PaperBackReader, inicio">
+          <span class="brand-mark">P</span>
+          <span>PaperBackReader</span>
+        </a>
+        <span class="status"><i></i><span id="library-status">Cargando biblioteca local</span></span>
+      </nav>
+
+      <div class="hero-content" id="top">
+        <p class="eyebrow">SISTEMA PERSONAL DE LECTURA</p>
+        <h1>Convertí papers en conocimiento que vuelve.</h1>
+        <p class="hero-copy">
+          Procesás cada archivo con el agente, que guarda en un JSON tus ideas previas y las conclusiones del autor.
+          Después las contrastás y usás los quizzes para comprobar cuánto recordás.
+        </p>
+        <a class="hero-cta" href="#reader">Explorar la biblioteca <span>↓</span></a>
+      </div>
+
+      <div class="system-flow" aria-label="Cómo funciona el sistema">
+        <article>
+          <b>01</b>
+          <div><h2>Desde la tarea</h2><p>Adjuntás un paper y, si querés, tus observaciones o predicción previa.</p></div>
+        </article>
+        <article>
+          <b>02</b>
+          <div><h2>Con un contrato base</h2><p><code>AGENTS.md</code> funciona como system prompt: fija el análisis, las restricciones y el formato JSON.</p></div>
+        </article>
+        <article>
+          <b>03</b>
+          <div><h2>En esta página</h2><p>Los resultados se ordenan por paper y vuelven como ideas, evidencia y preguntas de autoevaluación.</p></div>
+        </article>
+      </div>
+    </header>
+
+    <main id="reader" class="reader-shell">
+      <section class="reader-heading">
+        <div>
+          <p class="eyebrow dark">TU BIBLIOTECA</p>
+          <h2>Una idea a la vez.</h2>
+        </div>
+        <div class="library-stats" aria-label="Estadísticas de la biblioteca">
+          <span><strong id="paper-count">0</strong> papers</span>
+          <span><strong id="idea-count">0</strong> ideas</span>
+          <span><strong id="accuracy-value">—</strong> precisión</span>
+        </div>
+      </section>
+
+      <section class="reader-grid" aria-live="polite">
+        <aside class="paper-browser" aria-label="Papers disponibles">
+          <div class="panel-label"><span>ARCHIVO</span><button id="random-paper" title="Elegir un paper al azar">↝ Aleatorio</button></div>
+          <div id="paper-list" class="paper-list"></div>
+        </aside>
+
+        <article id="paper-content" class="paper-content">
+          <div class="empty-state">
+            <span>⌁</span>
+            <h3>Cargando conocimiento…</h3>
+            <p>Estamos leyendo los registros de tu carpeta outputs.</p>
+          </div>
+        </article>
+
+        <aside class="quiz-panel" aria-label="Autoevaluación">
+          <div class="panel-label"><span>RECUPERACIÓN ACTIVA</span><span id="quiz-difficulty" class="difficulty">—</span></div>
+          <div id="quiz-content" class="quiz-content"></div>
+        </aside>
+      </section>
+    </main>
+
+    <section class="manifesto">
+      <p class="eyebrow">EL ARCHIVO ESTÁ VIVO</p>
+      <blockquote>“Una biblioteca no es lo que guardaste.<br />Es lo que todavía podés recuperar.”</blockquote>
+      <div class="manifesto-actions">
+        <button id="surprise-me">Sorprendeme con una idea <span>↗</span></button>
+        <p><span id="practice-count">0</span> respuestas practicadas en este dispositivo.</p>
+      </div>
+    </section>
+
+    <footer>
+      <a class="brand footer-brand" href="#top"><span class="brand-mark">P</span><span>PaperBackReader</span></a>
+      <p>Un experimento personal de aprendizaje activo.</p>
+      <p class="footer-note">PREDICCIÓN · EVIDENCIA · RECUPERACIÓN</p>
+    </footer>
+
+    <script src="outputs/library-data.js"></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
