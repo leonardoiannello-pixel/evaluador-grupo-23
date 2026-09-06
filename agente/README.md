@@ -4,7 +4,9 @@ Este archivo documenta el procedimiento de ejecución del evaluador del Grupo 23
 
 ## Entorno de ejecución
 
-Para las corridas de calibración se utiliza **ChatGPT con acceso de lectura a GitHub**.
+El corrector es **portable entre plataformas** siempre que el entorno utilizado pueda leer de forma completa el repositorio de GitHub y aplicar sin cambios los archivos `agente/system_prompt.md`, `rubrica.md` y `agente/user_prompt.md`.
+
+Para la **calibración oficial V1 y V2 del Grupo 23 se utiliza Claude**, manteniendo el mismo entorno, modelo/configuración y operador en ambas versiones. Esto permite atribuir cualquier diferencia entre V1 y V2 al ajuste documentado de la rúbrica o del corrector, y no a un cambio de plataforma.
 
 El acceso al repositorio evaluado debe ser de **solo lectura**. El corrector no necesita crear, editar, borrar ni ejecutar archivos del trabajo que está evaluando.
 
@@ -44,7 +46,7 @@ No se requiere permiso de escritura ni ejecución de código.
 
 Para poder comparar V1 y V2 de manera válida:
 
-- los tres casos obligatorios se evalúan con el mismo entorno y la misma configuración;
+- los tres casos obligatorios se evalúan con el mismo entorno, modelo/configuración y operador;
 - durante las tres corridas de una misma versión no se modifica `rubrica.md`, `agente/system_prompt.md` ni `agente/user_prompt.md`;
 - cualquier cambio posterior debe quedar documentado como una nueva versión y explicar qué desacuerdo de calibración motivó el ajuste;
 - las salidas de V1 y V2 se conservan por separado.
