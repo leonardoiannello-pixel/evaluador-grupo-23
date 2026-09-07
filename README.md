@@ -85,7 +85,7 @@ Este control es de cierre y no bloquea la ejecución de V1/V2.
 
 ## Qué falta
 
-- Revisar/aprobar el PR #17 de la rama `martin/calibracion-v1-v2` y hacer merge a `main`.
+- ~~Revisar/aprobar el PR #17 y hacer merge a `main`~~ — hecho: aprobado por Facundo y mergeado (commit `1c2427c`).
 - Decidir en grupo qué hacer con el desacuerdo abierto de crédito parcial en afirmaciones sin evidencia (caso Tramposo, ver `calibracion.md`).
 - Reorganizar `casos/PaperBackReader/` a la estructura obligatoria (`prompts/`, `corridas/`, `DECISIONES.md`) si el grupo decide tratarlo como caso de referencia permanente, y quitar el archivo `__pycache__/server.cpython-310.pyc` que no debería estar commiteado.
 - Realizar el control final (Facundo, si está disponible) y preparar la prueba de fuego en vivo.
