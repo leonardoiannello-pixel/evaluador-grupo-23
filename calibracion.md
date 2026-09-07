@@ -53,3 +53,15 @@ Mismas condiciones que V1 (operador, plataforma, modelo, acceso a GitHub). Únic
 **El ajuste no resolvió el desacuerdo más grande en términos absolutos** (Tramposo sigue en 0/100 del agente contra 6,7/100 de la baseline humana, una diferencia de −6,7). Ese desacuerdo — cuánto crédito parcial merece una cifra o etiqueta específica sin ningún artefacto que la respalde — queda documentado como abierto y no resuelto en esta ronda, por la razón explicada más arriba: resolverlo en la dirección humana (dar crédito parcial) tensiona con el objetivo central del corrector de resistir manipulación por afirmaciones infladas, y merece una discusión de grupo explícita antes de tocar la rúbrica en ese punto, no un ajuste unilateral dentro de esta calibración.
 
 **Resumen honesto:** el ajuste V1→V2 mejoró la alineación exactamente donde apuntaba (Excelente: de +2,3 a +0,3 puntos de diferencia), no tuvo efecto donde no correspondía tenerlo (Flojo, Tramposo), y dejó sin resolver, a propósito y de forma documentada, un segundo desacuerdo real que requiere una decisión de diseño del grupo, no solo una corrección de rúbrica.
+
+## Prueba de generalización (holdout): casos/PaperBackReader
+
+`casos/PaperBackReader/` es el trabajo final real de Diego Rog, no uno de los tres casos sintéticos obligatorios. Se corrió con el corrector ya cerrado en V2 (`rubrica.md` commit `0826b77`), **después** de terminar la comparación V1→V2, precisamente para no contaminar el ajuste con este caso. Salida completa y sin editar en `calibracion/holdout/paperbackreader.md`.
+
+| Puntaje | Diego (humano) | Martín (humano) | Agente V2 |
+|---|---:|---:|---:|
+| Total | 61/100 | 63/100 | **64/100** |
+
+El agente generaliza razonablemente bien a un trabajo real y más complejo que los tres casos sintéticos: cae dentro del rango de los dos evaluadores humanos que lo puntuaron (61–63), sin haber sido calibrado sobre este caso. Coincide con ambos humanos en las mismas dos dimensiones más débiles (Análisis económico, inexistente; Gobierno y riesgo, sin L0–L4 ni responsable final) y en reconocer, a diferencia de los tres casos sintéticos, evidencia real de un conector/herramienta en uso (persistencia de archivos y ejecución de `node build-library.mjs`), algo que ninguno de los tres casos obligatorios permitía calificar con el máximo puntaje.
+
+El ajuste V1→V2 de §2.4 también generalizó al holdout de forma consistente: el proyecto narra dos intentos descartados (servidor Python local, selector manual de carpeta) sin conservar su código fuente — solo queda, como resto accidental no deseado, un `__pycache__/server.cpython-310.pyc` compilado — y el agente aplicó el mismo criterio que en los casos sintéticos, capeando Trazabilidad en 3/5 en vez de 5/5. Como hallazgo aparte de la calibración, ese `.pyc` no debería estar commiteado y se lo señala como mejora en `calibracion/holdout/paperbackreader.md`.
