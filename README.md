@@ -59,9 +59,9 @@ Se corrió la calibración formal completa sobre la rama `martin/calibracion-v1-
 4. **Ajuste V2**: un único cambio, acotado a `rubrica.md` §2.4 (commit `0826b77`), que exige evidencia concreta también de las iteraciones descartadas o fallidas que un proyecto menciona.
 5. **V2**: se corrieron de nuevo los mismos tres casos bajo las mismas condiciones. Resultados sin editar en `calibracion/agente-v2/`: Excelente 95/100 (mejora la alineación con la baseline humana de +2,3 a +0,3 puntos), Flojo 48/100 (sin cambio: ya aplicaba el criterio estricto), Tramposo 0/100 (sin cambio: no tiene `DECISIONES.md`).
 6. `calibracion.md` queda completo con la baseline humana, V1, el desacuerdo diagnosticado, el cambio realizado, V2 y la conclusión — incluyendo, documentado con honestidad, un segundo desacuerdo real (crédito parcial a afirmaciones sin evidencia en el caso Tramposo) que **no** se resolvió en esta ronda porque tensiona con el objetivo anti-manipulación del corrector y requiere una decisión de grupo.
-7. **Holdout**: recién después de cerrar V2 se corrió `casos/PaperBackReader/` (el trabajo final real de Diego) como prueba de generalización a un caso no usado para calibrar. Resultado en `calibracion/holdout/paperbackreader.md`: 64/100, dentro del rango de las dos evaluaciones humanas disponibles para ese caso (Diego 61, Martín 63).
+7. **Holdout**: recién después de cerrar V2 se corrió `casos/PaperBackReader/` (el trabajo final real de Diego) como prueba de generalización a un caso no usado para calibrar. Resultado en `calibracion/holdout/paperbackreader.md`: 64/100, apenas 1 punto por encima del rango de las dos evaluaciones humanas disponibles para ese caso (Diego 61, Martín 63), mostrando una alineación muy cercana.
 
-Todo este trabajo vive en la rama `martin/calibracion-v1-v2`, pendiente de pull request a `main`.
+Todo este trabajo vive en la rama `martin/calibracion-v1-v2`. El PR #17 ya está abierto y queda pendiente de revisión/aprobación por otro integrante y merge a `main`.
 
 ## Control final — a completar por Facundo si está disponible
 
@@ -85,7 +85,7 @@ Este control es de cierre y no bloquea la ejecución de V1/V2.
 
 ## Qué falta
 
-- Abrir el pull request de la rama `martin/calibracion-v1-v2` a `main` y conseguir su revisión/aprobación por otro integrante del equipo.
+- Revisar/aprobar el PR #17 de la rama `martin/calibracion-v1-v2` y hacer merge a `main`.
 - Decidir en grupo qué hacer con el desacuerdo abierto de crédito parcial en afirmaciones sin evidencia (caso Tramposo, ver `calibracion.md`).
 - Reorganizar `casos/PaperBackReader/` a la estructura obligatoria (`prompts/`, `corridas/`, `DECISIONES.md`) si el grupo decide tratarlo como caso de referencia permanente, y quitar el archivo `__pycache__/server.cpython-310.pyc` que no debería estar commiteado.
 - Realizar el control final (Facundo, si está disponible) y preparar la prueba de fuego en vivo.
