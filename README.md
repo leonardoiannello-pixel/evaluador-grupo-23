@@ -49,20 +49,19 @@ Para las corridas formales de calibración se acordó utilizar **Claude** como e
 
 Al cierre de este checkpoint **todavía no se ejecutaron las corridas formales V1 y V2**. La rúbrica y el system prompt deben permanecer congelados hasta terminar V1.
 
-## Próxima etapa — a completar por Martín
+## Calibración V1 → V2 — completada por Martín
 
-1. Actualizar su copia local con el último `main` y registrar el commit evaluado.
-2. Configurar Claude con `agente/system_prompt.md`, `rubrica.md` y `agente/user_prompt.md`, con acceso de solo lectura al repositorio.
-3. Registrar plataforma, modelo/configuración utilizada y fecha de ejecución.
-4. Ejecutar V1 sobre `casos/excelente/`, `casos/flojo/` y `casos/tramposo/` sin cambiar entre corridas la rúbrica ni los prompts.
-5. Guardar cada respuesta **exactamente como salió**, sin edición manual, en `calibracion/agente-v1/`.
-6. Comparar los resultados del agente con las evaluaciones humanas por dimensión y total.
-7. Identificar uno o pocos desacuerdos relevantes y diagnosticar si el problema está en la rúbrica o en el corrector.
-8. Hacer un ajuste explícito y documentado, generando la versión V2 correspondiente.
-9. Volver a correr exactamente los mismos tres casos bajo las mismas condiciones y guardar las respuestas en `calibracion/agente-v2/`.
-10. Completar `calibracion.md` con: baseline humana, V1, desacuerdos, cambio realizado, V2 y resultado del ajuste.
-11. Recién después de cerrar V2, ejecutar `casos/PaperBackReader/` como prueba adicional no usada para calibrar y documentar qué ocurrió.
-12. Actualizar este README reemplazando esta sección por la evidencia real de las corridas realizadas.
+Se corrió la calibración formal completa sobre la rama `martin/calibracion-v1-v2`, cortada desde el commit `f3253f9` de `main`, con Claude (`claude-sonnet-5`) como plataforma/modelo, mismo operador y mismo acceso a GitHub en ambas versiones.
+
+1. Se confirmó el estado de `main`: `agente/user_prompt.md`, `agente/README.md`, este `README.md` y las tres evaluaciones humanas (`calibracion/humanos/{leonardo,martin,diego}.md`) ya estaban integrados. Se ignoró el PR #14 (descartado; la versión revisada de Diego ya está en `main`).
+2. **V1**: se corrió el corrector sobre los tres casos obligatorios sin modificar `rubrica.md` ni `agente/system_prompt.md`. Resultados sin editar en `calibracion/agente-v1/`: Excelente 97/100, Flojo 48/100, Tramposo 0/100.
+3. **Comparación contra la baseline humana** (promedio simple de Leonardo, Martín y Diego: Excelente 94,7, Flojo 43,7, Tramposo 6,7): el desacuerdo más importante y accionable fue que el agente sobre-puntuaba Trazabilidad (rúbrica §2.4) en el caso Excelente cuando una iteración fallida se narra pero no conserva su evidencia — un patrón que los tres humanos penalizaban de forma consistente y que el propio agente sí penalizaba en el caso Flojo ante la misma situación. Diagnóstico: ambigüedad de `rubrica.md`, no instrucción insuficiente del system prompt.
+4. **Ajuste V2**: un único cambio, acotado a `rubrica.md` §2.4 (commit `0826b77`), que exige evidencia concreta también de las iteraciones descartadas o fallidas que un proyecto menciona.
+5. **V2**: se corrieron de nuevo los mismos tres casos bajo las mismas condiciones. Resultados sin editar en `calibracion/agente-v2/`: Excelente 95/100 (mejora la alineación con la baseline humana de +2,3 a +0,3 puntos), Flojo 48/100 (sin cambio: ya aplicaba el criterio estricto), Tramposo 0/100 (sin cambio: no tiene `DECISIONES.md`).
+6. `calibracion.md` queda completo con la baseline humana, V1, el desacuerdo diagnosticado, el cambio realizado, V2 y la conclusión — incluyendo, documentado con honestidad, un segundo desacuerdo real (crédito parcial a afirmaciones sin evidencia en el caso Tramposo) que **no** se resolvió en esta ronda porque tensiona con el objetivo anti-manipulación del corrector y requiere una decisión de grupo.
+7. **Holdout**: recién después de cerrar V2 se corrió `casos/PaperBackReader/` (el trabajo final real de Diego) como prueba de generalización a un caso no usado para calibrar. Resultado en `calibracion/holdout/paperbackreader.md`: 64/100, dentro del rango de las dos evaluaciones humanas disponibles para ese caso (Diego 61, Martín 63).
+
+Todo este trabajo vive en la rama `martin/calibracion-v1-v2`, pendiente de pull request a `main`.
 
 ## Control final — a completar por Facundo si está disponible
 
@@ -86,13 +85,10 @@ Este control es de cierre y no bloquea la ejecución de V1/V2.
 
 ## Qué falta
 
-- Ejecutar y conservar V1.
-- Comparar V1 contra el criterio humano.
-- Documentar el desacuerdo que justifique una iteración.
-- Ejecutar y conservar V2.
-- Cerrar `calibracion.md`.
-- Hacer la prueba adicional con PaperBackReader.
-- Realizar el control final y preparar la prueba de fuego en vivo.
+- Abrir el pull request de la rama `martin/calibracion-v1-v2` a `main` y conseguir su revisión/aprobación por otro integrante del equipo.
+- Decidir en grupo qué hacer con el desacuerdo abierto de crédito parcial en afirmaciones sin evidencia (caso Tramposo, ver `calibracion.md`).
+- Reorganizar `casos/PaperBackReader/` a la estructura obligatoria (`prompts/`, `corridas/`, `DECISIONES.md`) si el grupo decide tratarlo como caso de referencia permanente, y quitar el archivo `__pycache__/server.cpython-310.pyc` que no debería estar commiteado.
+- Realizar el control final (Facundo, si está disponible) y preparar la prueba de fuego en vivo.
 
 ## Qué aprendimos hasta este punto
 
