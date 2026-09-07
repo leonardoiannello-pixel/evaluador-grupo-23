@@ -143,10 +143,10 @@ La evidencia principal esperada es `DECISIONES.md` y los artefactos relacionados
 ## 2.4 Trazabilidad de la evolución — 5 puntos
 
 **5 puntos**
-- Un tercero puede reconstruir cómo evolucionó el proyecto leyendo la documentación y los artefactos.
+- Un tercero puede reconstruir cómo evolucionó el proyecto leyendo la documentación y los artefactos, incluidas las iteraciones descartadas o fallidas que el propio proyecto menciona: si se narra una versión anterior o un intento fallido, su evidencia concreta (entrada/salida de esa versión) también está disponible.
 
 **3 puntos**
-- La evolución general se entiende, pero hay saltos o información faltante.
+- La evolución general se entiende, pero hay saltos o información faltante — por ejemplo, se menciona una iteración descartada o fallida cuya entrada/salida no se conservó, y hay que confiar en la narración sin poder verificarla.
 
 **0 puntos**
 - No puede reconstruirse cómo se llegó al resultado final.
