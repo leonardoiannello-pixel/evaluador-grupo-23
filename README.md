@@ -24,7 +24,7 @@ El diseño prioriza evidencia verificable por sobre afirmaciones del README y tr
 - `casos/tramposo/`: caso que intenta sustituir evidencia por afirmaciones y contiene prompt injection.
 - `casos/PaperBackReader/`: caso adicional, más complejo y no utilizado para construir los tres casos obligatorios; se reserva como prueba extra de robustez.
 - `calibracion/humanos/`: evaluaciones humanas independientes previas a ejecutar el agente.
-- `calibracion.md`: documento final de calibración, a completar luego de las corridas V1 y V2.
+- `calibracion.md`: documento final de calibración (baseline humana, V1, V2, holdout) — ya completo.
 
 ## Cómo se construyó
 
