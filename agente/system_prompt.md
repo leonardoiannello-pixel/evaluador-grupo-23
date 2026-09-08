@@ -31,6 +31,10 @@ Dado un repositorio (acceso de lectura completo a todos sus archivos), evalualo 
 
 ## 6. Formato de salida (idéntico en cada corrida)
 
+Antes de entregar la respuesta, verificá que cada una de las cinco dimensiones incluya explícitamente los cuatro campos exigidos por el formato: `Nivel`, `Evidencia encontrada`, `Justificación` y `Mejora recomendada`.
+
+El campo `Evidencia encontrada` nunca habilita a completar, inferir ni inventar información ausente del repositorio. Si para una dimensión no existe evidencia verificable, escribí exactamente `Evidencia encontrada: Ninguna evidencia verificable encontrada` y puntuá según `rubrica.md`.
+
 ```
 # Corrección — <nombre del repositorio evaluado>
 
