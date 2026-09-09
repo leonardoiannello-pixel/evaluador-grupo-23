@@ -1,8 +1,10 @@
 # Calibración
 
-Metodología: cada uno de los tres integrantes con evaluación humana válida (Leonardo, Martín, Diego) puntuó los tres casos obligatorios de forma independiente, antes de correr el agente corrector, aplicando `rubrica.md`. Después se corrió el agente corrector (V1) bajo las mismas condiciones (mismo operador, plataforma, modelo y acceso a GitHub) sobre los mismos tres casos, y se comparó contra el promedio simple de las tres evaluaciones humanas. Las evaluaciones humanas completas están en `calibracion/humanos/`.
+La calibración formal se realizó sobre los tres casos obligatorios (`excelente`, `flojo`, `tramposo`) comparando primero criterio humano independiente y luego dos versiones del agente corrector. Después se hizo una prueba holdout sobre `PaperBackReader`. Finalmente, tras un ajuste de formato del system prompt, se ejecutó una V3 de validación posterior para comprobar consistencia estructural y portabilidad sin reabrir la calibración de puntajes.
 
-## Baseline humana (promedio simple de Leonardo, Martín y Diego)
+## Baseline humana
+
+Leonardo, Martín y Diego evaluaron de forma independiente los tres casos antes de ver los resultados del agente. La versión inicial de la evaluación de Diego fue descartada por el grupo y reemplazada por una revisión independiente; solamente esa versión revisada integra la baseline.
 
 | Caso | Sistema (30) | Proceso (25) | Formato (15) | Económico (15) | Gobierno (15) | **Total (100)** |
 |---|---:|---:|---:|---:|---:|---:|
@@ -10,58 +12,82 @@ Metodología: cada uno de los tres integrantes con evaluación humana válida (L
 | Flojo | 17,3 | 12,3 | 9,0 | 0,0 | 5,0 | **43,7** |
 | Tramposo | 0,0 | 0,0 | 0,0 | 4,3 | 2,3 | **6,7** |
 
-Detalle por evaluador (Leonardo / Martín / Diego):
+Totales por evaluador (Leonardo / Martín / Diego):
 
 - Excelente: 95 / 96 / 93
 - Flojo: 43 / 42 / 46
 - Tramposo: 9 / 4 / 7
 
+Las evaluaciones completas se conservan en `calibracion/humanos/`.
+
 ## V1 del agente corrector
 
-Operador: Martín Grafia. Plataforma/modelo: Claude (Cowork), `claude-sonnet-5`. Fecha: 2026-09-07. Commit de `main` evaluado: `f3253f9`. Salidas completas y sin editar en `calibracion/agente-v1/{excelente,flojo,tramposo}.md`.
+Operador: Martín Grafia. Plataforma/modelo: Claude (Cowork), `claude-sonnet-5`. Fecha: 2026-09-07. Commit evaluado de `main`: `f3253f9`. Las salidas originales se conservan en `calibracion/agente-v1/`.
 
-| Caso | Sistema (30) | Proceso (25) | Formato (15) | Económico (15) | Gobierno (15) | **Total (100)** | Baseline humana | Diferencia |
+| Caso | Sistema | Proceso | Formato | Económico | Gobierno | **Total** | Baseline humana | Diferencia |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Excelente | 27 | 25 | 15 | 15 | 15 | **97** | 94,7 | +2,3 |
 | Flojo | 20 | 13 | 10 | 0 | 5 | **48** | 43,7 | +4,3 |
-| Tramposo | 0 | 0 | 0 | 0 | 0 | **0** | 6,7 | −6,7 |
+| Tramposo | 0 | 0 | 0 | 0 | 0 | **0** | 6,7 | -6,7 |
 
-## Desacuerdo elegido para V1 → V2: Proceso documentado / Trazabilidad en el caso Excelente
+### Desacuerdo elegido para V1 → V2
 
-**El desacuerdo más importante y más accionable no es el más grande en puntos absolutos, sino el más consistente y mejor evidenciado.** En el caso Excelente, el agente V1 puntuó Proceso documentado en 25/25, por encima de los tres evaluadores humanos (Leonardo 23, Martín 23, Diego 22) sin excepción. Los tres, de forma independiente, señalan el mismo motivo en su justificación: `DECISIONES.md` narra la Iteración 1 (dos fallas reales: fechas ambiguas y exceso de alcance del borrador) pero aclara explícitamente que esa corrida fallida **no se guardó como evidencia formal**. El agente V1 le dio a la sub-dimensión 2.4 (Trazabilidad de la evolución) el puntaje máximo (5/5) igual, razonando que el resto de la evolución sí es reconstruible — pero un tercero no puede verificar la primera falla narrada, solo confiar en la descripción.
+El desacuerdo más importante y accionable fue **Proceso documentado / Trazabilidad (2.4)** en el caso Excelente. Los tres humanos penalizaron que `DECISIONES.md` narrara una primera iteración fallida sin conservar la corrida que la demostraba; el agente V1 otorgó 5/5 en Trazabilidad. En el caso Flojo, ante un patrón equivalente, el mismo agente sí había aplicado el criterio estricto.
 
-**Diagnóstico:** es una ambigüedad de `rubrica.md`, no una instrucción insuficiente de `agente/system_prompt.md`. El texto del nivel alto de 2.4 dice "un tercero puede reconstruir cómo evolucionó el proyecto leyendo la documentación y los artefactos", sin aclarar si eso exige que **todas** las iteraciones mencionadas —incluidas las descartadas o fallidas— tengan su propio artefacto verificable, o si alcanza con que la versión final y sus iteraciones exitosas sí lo tengan. El agente V1 interpretó la segunda lectura; los tres humanos, de forma independiente y consistente, interpretaron la primera. Es revelador que el propio agente V1, al evaluar el caso Flojo, sí aplicó el criterio más estricto en una situación equivalente (la prueba que detectó el error de coma decimal tampoco se conservó, y el agente le restó puntos por eso en 2.4) — es decir, el agente fue inconsistente entre casos, no equivocado en abstracto. Eso confirma que el problema es de ambigüedad en el texto de la rúbrica, no de criterio.
+Diagnóstico: el problema estaba en una ambigüedad de `rubrica.md`, no en el system prompt. Se modificó únicamente §2.4 para aclarar que una evolución plenamente reconstruible exige evidencia también de las iteraciones fallidas o descartadas que el propio proyecto menciona. El cambio quedó en el commit `0826b77`.
 
-**No se investigó como desacuerdo principal** (aunque quedó documentado) el patrón de Análisis económico/Gobierno en el caso Tramposo, donde los tres humanos (Leonardo 6+3, Martín 2+2, Diego 5+2) dieron crédito parcial a cifras o etiquetas sin ningún artefacto detrás ("USD 0,0008 por corrida", "supervisión L3"), mientras que el agente V1 puntuó 0 en ambas dimensiones aplicando estrictamente la Regla general 2 de `rubrica.md` ("una afirmación en el README no alcanza por sí sola"). Es un desacuerdo real y consistente entre los tres humanos y el agente, pero se decidió no usarlo para el ajuste V1→V2 porque cualquier cambio de rúbrica en esa dirección (dar crédito parcial a una afirmación sin ningún respaldo) tensiona directamente con el objetivo central del corrector (resistir manipulación vía afirmaciones infladas) y, si se hiciera en la dirección opuesta (formalizar el criterio de cero), el V1 ya lo aplicaba, sin producir ningún cambio medible en V2. Queda anotado acá como un desacuerdo abierto para que el grupo lo discuta — no se resuelve en esta ronda.
+Se dejó deliberadamente abierto otro desacuerdo: los humanos otorgaron algo de crédito parcial en Análisis económico/Gobierno al caso Tramposo por cifras o etiquetas declaradas sin respaldo, mientras que el agente aplicó la regla estricta de evidencia y dio 0. No se ajustó la rúbrica para acercar artificialmente ese resultado porque hacerlo tensionaría con el objetivo anti-manipulación del evaluador.
 
 ## V2 del agente corrector
 
-Mismas condiciones que V1 (operador, plataforma, modelo, acceso a GitHub). Único cambio: `rubrica.md` §2.4 (commit `0826b77`, ver más arriba). Salidas completas y sin editar en `calibracion/agente-v2/{excelente,flojo,tramposo}.md`.
+V2 se ejecutó con el mismo operador, plataforma/modelo y acceso a GitHub que V1. El único cambio fue `rubrica.md` §2.4. Las salidas originales están en `calibracion/agente-v2/`.
 
-| Caso | Sistema (30) | Proceso (25) | Formato (15) | Económico (15) | Gobierno (15) | **Total (100)** | V1 | Baseline humana | Diferencia vs. humana |
+| Caso | Sistema | Proceso | Formato | Económico | Gobierno | **Total** | V1 | Baseline humana | Diferencia vs. humana |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Excelente | 27 | 23 | 15 | 15 | 15 | **95** | 97 | 94,7 | +0,3 |
 | Flojo | 20 | 13 | 10 | 0 | 5 | **48** | 48 | 43,7 | +4,3 |
-| Tramposo | 0 | 0 | 0 | 0 | 0 | **0** | 0 | 6,7 | −6,7 |
+| Tramposo | 0 | 0 | 0 | 0 | 0 | **0** | 0 | 6,7 | -6,7 |
 
-## Conclusión: ¿mejoró la alineación?
+El ajuste mejoró exactamente el caso que lo había motivado: Excelente pasó de 97 a 95 y quedó prácticamente alineado con la baseline humana de 94,7. Flojo y Tramposo no cambiaron, como era esperable.
 
-**Sí, y de forma medible, en el caso que motivó el ajuste.** En Excelente, Proceso documentado bajó de 25/25 a 23/25 exactamente como predecía el diagnóstico (la Iteración 1 sin corrida conservada ahora cae en el nivel medio de Trazabilidad), y el puntaje total pasó de 97 (+2,3 sobre la baseline humana) a 95 (+0,3): una alineación casi exacta con el promedio humano (94,7), y dentro del rango individual de los tres evaluadores (93–96).
+## Holdout: `casos/PaperBackReader/`
 
-**En Flojo y Tramposo el ajuste no modificó nada, y eso es el resultado esperado, no una falla del ajuste.** En Flojo, el agente V1 ya había aplicado el criterio estricto de §2.4 ante el mismo patrón (una corrida que detectó una falla real y no se conservó) — el ajuste solo formaliza por escrito en la rúbrica un criterio que el corrector ya seguía ahí, así que V2 confirma consistencia, no introduce un cambio. En Tramposo no hay ningún `DECISIONES.md`, por lo que la sub-dimensión ya estaba en el piso de 0 puntos y no había margen para que el ajuste la modificara.
-
-**El ajuste no resolvió el desacuerdo más grande en términos absolutos** (Tramposo sigue en 0/100 del agente contra 6,7/100 de la baseline humana, una diferencia de −6,7). Ese desacuerdo — cuánto crédito parcial merece una cifra o etiqueta específica sin ningún artefacto que la respalde — queda documentado como abierto y no resuelto en esta ronda, por la razón explicada más arriba: resolverlo en la dirección humana (dar crédito parcial) tensiona con el objetivo central del corrector de resistir manipulación por afirmaciones infladas, y merece una discusión de grupo explícita antes de tocar la rúbrica en ese punto, no un ajuste unilateral dentro de esta calibración.
-
-**Resumen honesto:** el ajuste V1→V2 mejoró la alineación exactamente donde apuntaba (Excelente: de +2,3 a +0,3 puntos de diferencia), no tuvo efecto donde no correspondía tenerlo (Flojo, Tramposo), y dejó sin resolver, a propósito y de forma documentada, un segundo desacuerdo real que requiere una decisión de diseño del grupo, no solo una corrección de rúbrica.
-
-## Prueba de generalización (holdout): casos/PaperBackReader
-
-`casos/PaperBackReader/` es el trabajo final real de Diego Rog, no uno de los tres casos sintéticos obligatorios. Se corrió con el corrector ya cerrado en V2 (`rubrica.md` commit `0826b77`), **después** de terminar la comparación V1→V2, precisamente para no contaminar el ajuste con este caso. Salida completa y sin editar en `calibracion/holdout/paperbackreader.md`.
+Después de cerrar V2 se evaluó `casos/PaperBackReader/`, un trabajo real de Diego que no fue utilizado para construir ni calibrar los tres casos obligatorios. La salida está en `calibracion/holdout/paperbackreader.md`.
 
 | Puntaje | Diego (humano) | Martín (humano) | Agente V2 |
 |---|---:|---:|---:|
 | Total | 61/100 | 63/100 | **64/100** |
 
-El agente generaliza razonablemente bien a un trabajo real y más complejo que los tres casos sintéticos: obtiene 64/100, apenas 1 punto por encima del rango de los dos evaluadores humanos que lo puntuaron (61–63), mostrando una alineación muy cercana sin haber sido calibrado sobre este caso. Coincide con ambos humanos en las mismas dos dimensiones más débiles (Análisis económico, inexistente; Gobierno y riesgo, sin L0–L4 ni responsable final) y en reconocer, a diferencia de los tres casos sintéticos, evidencia real de un conector/herramienta en uso (persistencia de archivos y ejecución de `node build-library.mjs`), algo que ninguno de los tres casos obligatorios permitía calificar con el máximo puntaje.
+El agente generalizó razonablemente bien: quedó apenas por encima del rango de las dos evaluaciones humanas y coincidió en identificar como debilidades principales el análisis económico y el gobierno/riesgo. También aplicó de forma consistente el criterio V2 de trazabilidad a iteraciones descartadas sin evidencia completa.
 
-El ajuste V1→V2 de §2.4 también generalizó al holdout de forma consistente: el proyecto narra dos intentos descartados (servidor Python local, selector manual de carpeta) sin conservar su código fuente — solo queda, como resto accidental no deseado, un `__pycache__/server.cpython-310.pyc` compilado — y el agente aplicó el mismo criterio que en los casos sintéticos, capeando Trazabilidad en 3/5 en vez de 5/5. Como hallazgo aparte de la calibración, ese `.pyc` no debería estar commiteado y se lo señala como mejora en `calibracion/holdout/paperbackreader.md`.
+Durante ese control se detectó un archivo compilado `__pycache__/server.cpython-310.pyc` commiteado accidentalmente. Fue eliminado posteriormente mediante el PR #19; no formaba parte de la evidencia necesaria del caso.
+
+## V3 — validación posterior de formato y portabilidad
+
+Después de V2 se observó una inconsistencia de **formato**, no de criterio: en algunas salidas el corrector omitía el rótulo `Evidencia encontrada` aunque el system prompt pedía cuatro campos por dimensión. El PR #18 agregó una verificación explícita para que cada una de las cinco dimensiones incluya siempre `Nivel`, `Evidencia encontrada`, `Justificación` y `Mejora recomendada`, aclarando además que la ausencia de evidencia debe expresarse como tal y nunca completarse por inferencia.
+
+Como ese cambio ocurrió después de la calibración formal, se ejecutó una **V3 de validación posterior**, sin tocar `rubrica.md` ni intentar recalibrar los puntajes. Se utilizó ChatGPT (GPT-5.6 Sol) con acceso de solo lectura a GitHub sobre el commit `9c87a201` de `main`, el 2026-09-09. Esta ronda también funciona como prueba de portabilidad del corrector fuera del entorno Claude utilizado en V1/V2.
+
+Las salidas se conservan en `calibracion/agente-v3/`.
+
+| Caso | V2 | V3 | Cuatro campos presentes en las 5 dimensiones |
+|---|---:|---:|---|
+| Excelente | 95 | **95** | Sí |
+| Flojo | 48 | **48** | Sí |
+| Tramposo | 0 | **0** | Sí |
+
+Resultado: los tres puntajes se mantuvieron y el formato quedó completo en las cinco dimensiones de los tres casos. La V3 no reemplaza ni altera la calibración V1→V2; valida exclusivamente el ajuste formal posterior y aporta una evidencia adicional de portabilidad.
+
+## Conclusión
+
+La historia de calibración queda así:
+
+1. baseline humana independiente;
+2. V1 del agente;
+3. diagnóstico de un desacuerdo concreto y verificable;
+4. un único ajuste de rúbrica;
+5. V2 sobre los mismos casos y bajo las mismas condiciones;
+6. holdout sobre un caso real no usado para calibrar;
+7. ajuste posterior de formato y V3 de validación, sin modificar la lógica de puntaje.
+
+El desacuerdo del caso Tramposo sobre cuánto crédito merece una afirmación sin respaldo queda documentado y deliberadamente abierto. El grupo prioriza evidencia verificable y resistencia a manipulación por sobre una coincidencia artificial perfecta entre humano y agente.

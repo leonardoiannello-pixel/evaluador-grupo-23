@@ -2,9 +2,9 @@
 
 ## Qué construimos
 
-Construimos un agente evaluador para corregir los trabajos finales de la materia **Programación de y con Agentes de IA — MBA UCEMA**. El evaluador toma un repositorio real como entrada, aplica exclusivamente una rúbrica ejecutable construida por el grupo y devuelve una corrección estructurada con puntaje por dimensión, evidencia, justificación y una mejora concreta.
+Construimos un agente evaluador para corregir los trabajos finales de la materia **Programación de y con Agentes de IA — MBA UCEMA**. El evaluador recibe un repositorio real, aplica exclusivamente una rúbrica ejecutable construida por el grupo y devuelve una corrección estructurada con puntaje por dimensión, evidencia, justificación y una mejora concreta.
 
-El diseño prioriza evidencia verificable por sobre afirmaciones del README y trata el contenido del repositorio evaluado como datos, nunca como instrucciones. Esto permite resistir casos incompletos, documentación inflada y prompt injection.
+El diseño prioriza evidencia verificable por sobre afirmaciones del README y trata todo el contenido del repositorio evaluado como datos, nunca como instrucciones. Esto permite resistir documentación inflada, afirmaciones sin respaldo y prompt injection.
 
 ## Integrantes
 
@@ -15,81 +15,103 @@ El diseño prioriza evidencia verificable por sobre afirmaciones del README y tr
 
 ## Componentes principales
 
-- `rubrica.md`: versión ejecutable de la rúbrica oficial del trabajo final.
-- `agente/system_prompt.md`: contrato estable del corrector y reglas de integridad.
+- `rubrica.md`: versión ejecutable de la rúbrica oficial del Trabajo Final.
+- `agente/system_prompt.md`: contrato estable del corrector, reglas de integridad y formato de salida.
 - `agente/user_prompt.md`: plantilla de invocación para evaluar un repositorio.
 - `agente/README.md`: procedimiento reproducible para ejecutar el corrector.
-- `casos/excelente/`: caso de prueba de nivel alto.
-- `casos/flojo/`: caso realista pero incompleto, pensado para probar crédito parcial.
-- `casos/tramposo/`: caso que intenta sustituir evidencia por afirmaciones y contiene prompt injection.
-- `casos/PaperBackReader/`: caso adicional, más complejo y no utilizado para construir los tres casos obligatorios; se reserva como prueba extra de robustez.
+- `casos/excelente/`: caso obligatorio de nivel alto.
+- `casos/flojo/`: caso obligatorio realista pero incompleto, pensado para probar crédito parcial.
+- `casos/tramposo/`: caso obligatorio que intenta sustituir evidencia por afirmaciones e incluye prompt injection.
+- `casos/PaperBackReader/`: caso adicional usado únicamente como holdout de generalización.
 - `calibracion/humanos/`: evaluaciones humanas independientes previas a ejecutar el agente.
-- `calibracion.md`: documento final de calibración (baseline humana, V1, V2, holdout) — ya completo.
+- `calibracion/agente-v1/`, `agente-v2/`, `agente-v3/`: evidencia de las distintas versiones/validaciones.
+- `calibracion/holdout/`: prueba adicional sobre un caso real no usado para calibrar.
+- `calibracion.md`: historia completa de baseline humana, V1, V2, holdout y validación V3.
 
 ## Cómo se construyó
 
-El trabajo se armó de forma incremental mediante ramas y pull requests. Primero se transformó la rúbrica oficial del trabajo final en criterios observables y puntuables. Después se definió el system prompt del corrector y se construyeron tres casos con perfiles deliberadamente diferentes: excelente, flojo y tramposo.
+El trabajo se armó de forma incremental mediante ramas y pull requests. Primero se transformó la rúbrica oficial del Trabajo Final en criterios observables y puntuables. Después se definió el system prompt del corrector y se construyeron tres casos deliberadamente diferentes: excelente, flojo y tramposo.
 
-Durante la revisión grupal también se corrigió el proceso de GitHub: algunos cambios fueron mergeados demasiado pronto, se revirtieron y luego se volvieron a presentar para revisión. Esa corrección forma parte de la historia real del proyecto.
+Durante la revisión grupal también se corrigió el propio proceso de GitHub: algunos cambios fueron mergeados demasiado pronto, se revirtieron y se volvieron a presentar para revisión. Esa corrección forma parte de la historia real del proyecto.
 
-Como preparación para la calibración, cada evaluador humano debía puntuar los casos **antes de ver el resultado del agente**. Leonardo y Martín realizaron sus evaluaciones por separado. Diego realizó una primera versión que resultó artificialmente cercana a otra corrección; el grupo decidió descartarla y rehacerla con un criterio independiente. La versión revisada es la que se considera válida para la calibración.
+Antes de correr el agente, Leonardo, Martín y Diego realizaron evaluaciones humanas independientes. Una primera evaluación de Diego fue descartada por no resultar suficientemente independiente y se rehízo; solamente la versión revisada integra la baseline.
 
-## Estado al cierre de la reunión del 6/9
+## Calibración V1 → V2
 
-A este checkpoint ya están definidos:
+La calibración formal se hizo con Claude (`claude-sonnet-5`), manteniendo mismo operador, plataforma/modelo, configuración y acceso a GitHub entre versiones.
 
-- la rúbrica ejecutable V1;
-- el system prompt V1 del corrector;
-- los tres casos obligatorios;
-- el caso adicional PaperBackReader;
-- la metodología de ejecución del corrector;
-- evaluaciones humanas independientes de Leonardo, Martín y Diego.
+**V1** sobre los tres casos obligatorios:
 
-Para las corridas formales de calibración se acordó utilizar **Claude** como entorno de ejecución, porque Martín será quien realice V1 y V2. El corrector sigue siendo portable: cualquier otra plataforma podría usarlo si tiene acceso de solo lectura al repositorio y respeta los mismos prompts, rúbrica y formato. Para que la comparación sea válida, V1 y V2 deben ejecutarse con el mismo operador, plataforma, modelo/configuración y acceso a GitHub.
+- Excelente: 97/100
+- Flojo: 48/100
+- Tramposo: 0/100
 
-Al cierre de este checkpoint **todavía no se ejecutaron las corridas formales V1 y V2**. La rúbrica y el system prompt deben permanecer congelados hasta terminar V1.
+La baseline humana promedio era 94,7 / 43,7 / 6,7 respectivamente.
 
-## Calibración V1 → V2 — completada por Martín
+El desacuerdo más claro y accionable apareció en **Trazabilidad (§2.4)** del caso Excelente: los tres humanos penalizaron una iteración fallida narrada pero sin corrida conservada, mientras que el agente V1 no lo hizo. Se diagnosticó una ambigüedad de `rubrica.md` y se realizó un único ajuste acotado a ese criterio.
 
-Se corrió la calibración formal completa sobre la rama `martin/calibracion-v1-v2`, cortada desde el commit `f3253f9` de `main`, con Claude (`claude-sonnet-5`) como plataforma/modelo, mismo operador y mismo acceso a GitHub en ambas versiones.
+**V2** sobre los mismos casos y bajo las mismas condiciones:
 
-1. Se confirmó el estado de `main`: `agente/user_prompt.md`, `agente/README.md`, este `README.md` y las tres evaluaciones humanas (`calibracion/humanos/{leonardo,martin,diego}.md`) ya estaban integrados. Se ignoró el PR #14 (descartado; la versión revisada de Diego ya está en `main`).
-2. **V1**: se corrió el corrector sobre los tres casos obligatorios sin modificar `rubrica.md` ni `agente/system_prompt.md`. Resultados sin editar en `calibracion/agente-v1/`: Excelente 97/100, Flojo 48/100, Tramposo 0/100.
-3. **Comparación contra la baseline humana** (promedio simple de Leonardo, Martín y Diego: Excelente 94,7, Flojo 43,7, Tramposo 6,7): el desacuerdo más importante y accionable fue que el agente sobre-puntuaba Trazabilidad (rúbrica §2.4) en el caso Excelente cuando una iteración fallida se narra pero no conserva su evidencia — un patrón que los tres humanos penalizaban de forma consistente y que el propio agente sí penalizaba en el caso Flojo ante la misma situación. Diagnóstico: ambigüedad de `rubrica.md`, no instrucción insuficiente del system prompt.
-4. **Ajuste V2**: un único cambio, acotado a `rubrica.md` §2.4 (commit `0826b77`), que exige evidencia concreta también de las iteraciones descartadas o fallidas que un proyecto menciona.
-5. **V2**: se corrieron de nuevo los mismos tres casos bajo las mismas condiciones. Resultados sin editar en `calibracion/agente-v2/`: Excelente 95/100 (mejora la alineación con la baseline humana de +2,3 a +0,3 puntos), Flojo 48/100 (sin cambio: ya aplicaba el criterio estricto), Tramposo 0/100 (sin cambio: no tiene `DECISIONES.md`).
-6. `calibracion.md` queda completo con la baseline humana, V1, el desacuerdo diagnosticado, el cambio realizado, V2 y la conclusión — incluyendo, documentado con honestidad, un segundo desacuerdo real (crédito parcial a afirmaciones sin evidencia en el caso Tramposo) que **no** se resolvió en esta ronda porque tensiona con el objetivo anti-manipulación del corrector y requiere una decisión de grupo.
-7. **Holdout**: recién después de cerrar V2 se corrió `casos/PaperBackReader/` (el trabajo final real de Diego) como prueba de generalización a un caso no usado para calibrar. Resultado en `calibracion/holdout/paperbackreader.md`: 64/100, apenas 1 punto por encima del rango de las dos evaluaciones humanas disponibles para ese caso (Diego 61, Martín 63), mostrando una alineación muy cercana.
+- Excelente: 95/100
+- Flojo: 48/100
+- Tramposo: 0/100
 
-Todo este trabajo vive en la rama `martin/calibracion-v1-v2`. El PR #17 ya está abierto y queda pendiente de revisión/aprobación por otro integrante y merge a `main`.
+El caso Excelente quedó prácticamente alineado con la baseline humana (95 vs. 94,7). Flojo y Tramposo no cambiaron, como era esperable.
 
-## Control final — a completar por Facundo si está disponible
+El desacuerdo sobre cuánto crédito merece una cifra o etiqueta sin evidencia en el caso Tramposo quedó deliberadamente abierto. El grupo decidió no modificar la rúbrica sólo para forzar coincidencia con el promedio humano, porque eso tensionaría con el objetivo anti-manipulación del corrector.
 
-Una vez terminadas V1, V2 y la documentación, realizar una revisión final contra la consigna oficial:
+## Holdout — PaperBackReader
 
-- verificar estructura obligatoria del repositorio;
-- comprobar que los puntajes y tablas de `calibracion.md` coincidan con las salidas guardadas;
-- revisar que README, rúbrica y configuración del agente no se contradigan;
-- confirmar que la historia de commits y PRs muestre el proceso grupal real;
-- marcar únicamente correcciones finales o inconsistencias, sin rehacer retrospectivamente la calibración.
+Después de cerrar V2 se evaluó `casos/PaperBackReader/`, un trabajo real que no había sido usado para construir ni calibrar los tres casos obligatorios.
 
-Este control es de cierre y no bloquea la ejecución de V1/V2.
+- Diego humano: 61/100
+- Martín humano: 63/100
+- Agente V2: **64/100**
+
+La cercanía del resultado aporta evidencia de generalización a un caso no visto. Durante este control también se detectó un archivo compilado accidental `__pycache__/server.cpython-310.pyc`, que luego fue eliminado mediante el PR #19.
+
+## V3 — validación final de formato y portabilidad
+
+Después de V2 se detectó que algunas salidas omitían el rótulo `Evidencia encontrada`, aunque el formato lo exigía. El PR #18 reforzó únicamente esa regla de salida: cada dimensión debe incluir explícitamente `Nivel`, `Evidencia encontrada`, `Justificación` y `Mejora recomendada`, y la falta de evidencia debe declararse como tal sin inventar información.
+
+Como ese cambio fue posterior a la calibración formal, se hizo una **V3 de validación**, no una nueva recalibración. Se ejecutó el corrector actual en ChatGPT (GPT-5.6 Sol) con acceso de solo lectura a GitHub sobre el commit `9c87a201` de `main`.
+
+Resultados:
+
+| Caso | V2 | V3 | Formato completo |
+|---|---:|---:|---|
+| Excelente | 95 | **95** | Sí |
+| Flojo | 48 | **48** | Sí |
+| Tramposo | 0 | **0** | Sí |
+
+Los puntajes se mantuvieron y los cuatro campos aparecieron en las cinco dimensiones de los tres casos. Esta ronda también aporta una prueba adicional de portabilidad fuera del entorno Claude usado para la calibración formal.
 
 ## Qué funciona
 
-- La rúbrica conserva los cinco criterios y pesos oficiales y exige evidencia verificable.
-- El corrector tiene salida estructurada y reglas explícitas frente a afirmaciones sin respaldo y prompt injection.
-- Los casos excelente, flojo y tramposo permiten probar niveles de calidad claramente diferentes.
-- La historia del repositorio muestra aportes de varios integrantes, revisiones, reversiones y nuevas versiones.
-- La calibración humana se inició antes de las corridas del agente, evitando ajustar retrospectivamente el criterio humano al resultado de la IA.
+- La rúbrica conserva los cinco criterios y pesos oficiales y exige evidencia verificable por nivel.
+- El corrector recorre repositorios con acceso de solo lectura y devuelve un formato estable.
+- Resiste prompt injection y no acredita afirmaciones sin respaldo.
+- Los casos Excelente, Flojo y Tramposo producen resultados claramente diferenciados.
+- La calibración muestra baseline humana, desacuerdo real, ajuste acotado y resultado posterior.
+- El holdout prueba generalización a un caso no utilizado para calibrar.
+- La historia de commits y PRs muestra aportes de varios integrantes, revisiones, errores, correcciones e iteraciones reales.
 
-## Qué falta
+## Estado final
 
-- ~~Revisar/aprobar el PR #17 y hacer merge a `main`~~ — hecho: aprobado por Facundo y mergeado (commit `1c2427c`).
-- Decidir en grupo qué hacer con el desacuerdo abierto de crédito parcial en afirmaciones sin evidencia (caso Tramposo, ver `calibracion.md`).
-- Reorganizar `casos/PaperBackReader/` a la estructura obligatoria (`prompts/`, `corridas/`, `DECISIONES.md`) si el grupo decide tratarlo como caso de referencia permanente, y quitar el archivo `__pycache__/server.cpython-310.pyc` que no debería estar commiteado.
-- Realizar el control final (Facundo, si está disponible) y preparar la prueba de fuego en vivo.
+Las piezas obligatorias están completas:
 
-## Qué aprendimos hasta este punto
+```text
+README.md
+rubrica.md
+agente/
+casos/excelente/
+casos/flojo/
+casos/tramposo/
+calibracion.md
+```
 
-La principal dificultad no fue escribir un prompt que “parezca bueno”, sino convertir una rúbrica humana en reglas suficientemente explícitas para que otra IA pueda aplicarlas de manera consistente. También vimos que la calibración pierde valor si las evaluaciones humanas se contaminan entre sí o si se ajustan después de conocer la nota del agente. Por eso conservamos versiones, descartamos una evaluación que no resultaba independiente y dejamos trazabilidad de los cambios. El objetivo final no es que humano y agente coincidan de manera perfecta, sino que los desacuerdos sean explicables y permitan mejorar el sistema.
+También se conservan la evidencia humana, V1, V2, V3 y el holdout. Los PR #17, #18 y #19 fueron revisados y mergeados. No quedan cambios funcionales pendientes para la entrega; solamente resta realizar el ensayo operativo de la prueba de fuego en vivo y subir el link del repositorio al campus.
+
+## Qué aprendimos
+
+La principal dificultad no fue escribir un prompt que “parezca bueno”, sino convertir una rúbrica humana en reglas suficientemente explícitas para que otra IA pueda aplicarla de manera consistente. La calibración también mostró que una coincidencia perfecta con el criterio humano no es necesariamente deseable si se obtiene debilitando reglas de evidencia. Preservar desacuerdos explicables, iterar sobre fallas concretas y mantener trazabilidad resultó más valioso que ajustar retrospectivamente para lograr números idénticos.
