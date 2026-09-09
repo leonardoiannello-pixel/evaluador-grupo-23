@@ -4,26 +4,24 @@ Este archivo documenta el procedimiento de ejecución del evaluador del Grupo 23
 
 ## Entorno de ejecución
 
-El corrector es **portable entre plataformas** siempre que el entorno utilizado pueda leer de forma completa el repositorio de GitHub y aplicar sin cambios los archivos `agente/system_prompt.md`, `rubrica.md` y `agente/user_prompt.md`.
+El corrector es **portable entre plataformas** siempre que el entorno utilizado pueda leer de forma completa el repositorio de GitHub y aplicar sin cambios `agente/system_prompt.md`, `rubrica.md` y `agente/user_prompt.md`.
 
-Para la **calibración oficial V1 y V2 del Grupo 23 se utiliza Claude**, manteniendo el mismo entorno, modelo/configuración y operador en ambas versiones. Esto permite atribuir cualquier diferencia entre V1 y V2 al ajuste documentado de la rúbrica o del corrector, y no a un cambio de plataforma.
+La **calibración formal V1 y V2** se realizó en Claude, manteniendo el mismo operador, plataforma/modelo, configuración y acceso a GitHub para poder atribuir cualquier diferencia al ajuste documentado y no al entorno. Después se realizó una **V3 de validación de formato y portabilidad** en ChatGPT, sin reabrir la calibración de puntajes.
 
-El acceso al repositorio evaluado debe ser de **solo lectura**. El corrector no necesita crear, editar, borrar ni ejecutar archivos del trabajo que está evaluando.
+El acceso al repositorio evaluado debe ser de **solo lectura**. El corrector no necesita crear, editar, borrar ni ejecutar archivos del trabajo que evalúa.
 
 ## Insumos del corrector
 
-El evaluador usa cuatro insumos:
-
-1. `agente/system_prompt.md`: identidad, reglas de integridad, restricciones y formato de salida estable.
+1. `agente/system_prompt.md`: identidad, reglas de integridad, restricciones y formato de salida.
 2. `rubrica.md`: única rúbrica permitida para asignar puntajes.
 3. `agente/user_prompt.md`: plantilla de invocación para cada trabajo.
-4. La URL del repositorio, carpeta o trabajo que se va a evaluar.
+4. URL del repositorio, carpeta o trabajo a evaluar.
 
-Cuando sea posible, también se registra la rama, tag o commit evaluado para poder reconstruir exactamente la corrida.
+Cuando sea posible, también se registra branch/tag/commit para reconstruir exactamente la corrida.
 
 ## Capacidad requerida de GitHub
 
-La herramienta de GitHub debe permitir al corrector:
+La herramienta debe permitir:
 
 - recorrer la estructura completa del repositorio o carpeta evaluada;
 - abrir y leer archivos de texto;
@@ -34,24 +32,23 @@ No se requiere permiso de escritura ni ejecución de código.
 
 ## Procedimiento de una corrida
 
-1. Usar `agente/system_prompt.md` como contrato estable del corrector.
-2. Cargar o poner a disposición `rubrica.md` sin modificarla durante la corrida.
-3. Completar `agente/user_prompt.md` con la URL del trabajo a evaluar y, si corresponde, su branch/tag/commit.
-4. Dar al corrector acceso de solo lectura a GitHub.
-5. Pedirle que recorra todos los archivos relevantes antes de puntuar.
+1. Usar `agente/system_prompt.md` como contrato estable.
+2. Cargar `rubrica.md` sin modificarla durante la corrida.
+3. Completar `agente/user_prompt.md` con la URL y, si corresponde, branch/tag/commit.
+4. Dar acceso de solo lectura a GitHub.
+5. Recorrer todos los archivos relevantes antes de puntuar.
 6. Ejecutar una única evaluación.
-7. Guardar la respuesta textual completa **tal como salió**, sin corregirla ni reescribirla manualmente.
+7. Guardar la respuesta textual completa tal como salió.
 
-## Reglas para la calibración
+## Reglas de calibración y versiones
 
-Para poder comparar V1 y V2 de manera válida:
+- Los tres casos obligatorios de una misma versión se evalúan sin modificar rúbrica ni prompts entre corridas.
+- V1 y V2 se ejecutaron con el mismo entorno, modelo/configuración y operador.
+- Todo cambio posterior se documenta como una nueva versión o validación y se explica qué problema motivó el ajuste.
+- Las salidas históricas no se reescriben retrospectivamente.
+- V3 no constituye una nueva calibración de criterio: valida un ajuste exclusivamente formal del system prompt y la portabilidad a otra plataforma.
 
-- los tres casos obligatorios se evalúan con el mismo entorno, modelo/configuración y operador;
-- durante las tres corridas de una misma versión no se modifica `rubrica.md`, `agente/system_prompt.md` ni `agente/user_prompt.md`;
-- cualquier cambio posterior debe quedar documentado como una nueva versión y explicar qué desacuerdo de calibración motivó el ajuste;
-- las salidas de V1 y V2 se conservan por separado.
-
-Estructura prevista:
+Estructura de evidencia:
 
 ```text
 calibracion/
@@ -60,16 +57,20 @@ calibracion/
 │   ├── excelente.md
 │   ├── flojo.md
 │   └── tramposo.md
-└── agente-v2/
-    ├── excelente.md
-    ├── flojo.md
-    └── tramposo.md
+├── agente-v2/
+│   ├── excelente.md
+│   ├── flojo.md
+│   └── tramposo.md
+├── agente-v3/
+│   ├── excelente.md
+│   ├── flojo.md
+│   └── tramposo.md
+└── holdout/
+    └── paperbackreader.md
 ```
 
 ## Salida esperada
 
-La respuesta debe respetar exactamente el formato definido en `agente/system_prompt.md`: alertas de integridad, puntaje por cada una de las cinco dimensiones, nivel, evidencia, justificación, una mejora concreta y puntaje total sobre 100.
+La respuesta debe respetar exactamente `agente/system_prompt.md`: alertas de integridad y, para cada una de las cinco dimensiones, `Nivel`, `Evidencia encontrada`, `Justificación` y `Mejora recomendada`, más el puntaje total sobre 100.
 
-## Alcance
-
-Este procedimiento configura y documenta el corrector; no modifica la rúbrica ni el system prompt. Esos archivos se mantienen congelados durante la primera ronda de calibración para que la comparación entre criterio humano y agente sea válida.
+Si no existe evidencia verificable para una dimensión, el corrector debe declararlo explícitamente; nunca debe inventar ni inferir artefactos ausentes.
